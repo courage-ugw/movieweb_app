@@ -683,7 +683,7 @@ input[type="checkbox"] { display: inline; }
 /* block grids
 --------------------------------------------------------------------- */
 .bgrid-sixths [class*="column"]   { width: 16.66667%; }
-.bgrid-quarters [class*="column"] { width: 25%; }
+.bgrid-quarters [class*="column"] { width: 300px; height: 420px; padding: 20px !important; }
 .bgrid-thirds [class*="column"]   { width: 33.33333%; }
 .bgrid-halves [class*="column"]   { width: 50%; }
 
@@ -735,6 +735,13 @@ properly.
 	   margin-right: 0;
       padding: 0 30px;
    }
+
+   #movies-wrapper >.movie-item {
+    width: 300px !important;
+    margin-left: auto;
+    margin-right: auto;
+}
+
 
    div.user-movie-stats {
       display: inline-flex;

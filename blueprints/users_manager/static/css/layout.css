@@ -171,6 +171,12 @@ ul#nav li.current a { color: #F06000; }
     margin-left: 10%;
 }
 
+#user-movies div.grid {
+    width: 300px;
+    height: 400px;
+    padding: 20px !important;
+}
+
 #user-movies h1 {
    font: 15px/24px 'opensans-semibold', sans-serif;
    text-transform: uppercase;
@@ -281,7 +287,7 @@ ul#nav li.current a { color: #F06000; }
 
 /* popup modal */
 .popup-modal {
-	max-width: 550px;
+	max-width: 300px;
 	background: #fff;
 	position: relative;
 	margin: 0 auto;
@@ -300,16 +306,22 @@ ul#nav li.current a { color: #F06000; }
    margin-bottom: 12px;
 }
 
-.popup-modal .movie-plot .movie-director {
+.popup-modal .movie-plot .movie-actors {
    font: 11px/21px 'opensans-light', sans-serif;
-   color: #A1A1A1;
+   color: #1c1717;
    text-transform: uppercase;
    letter-spacing: 2px;
    display: block;
    text-align: left;
 }
-.popup-modal .movie-plot .movie-director i {
+
+.popup-modal .movie-plot .movie-actors i {
    margin-right: 8px;
+   color: #af1010;
+}
+
+.popup-modal .movie-plot .movie-actors span {
+   color: #af1010;
 }
 
 .popup-modal .link-box {
@@ -323,6 +335,13 @@ ul#nav li.current a { color: #F06000; }
 	text-transform: uppercase;
    letter-spacing: 3px;
    cursor: pointer;
+}
+
+.popup-modal .square-image{
+   width: 300px;
+   height: 300px;
+   overflow: hidden;
+   position: relative;
 }
 
 .popup-modal a:hover {	color: #00CCCC; }

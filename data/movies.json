@@ -6,6 +6,7 @@
         "email": "kywin@gmail.com",
         "password": "ikenna",
         "date_joined": "21-Jul-2023",
+        "like_count": 1,
         "movies": [
             {
                 "id": 1,
@@ -14,7 +15,12 @@
                 "year": 2010,
                 "rating": 8.8,
                 "watched": "no",
-                "country": "USA"
+                "country": "England",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BMzI0NDU3MDAtOTE5Ni00ODM3LWFlYTgtY2ExZGYyMmU3M2E1XkEyXkFqcGdeQXVyNzI1NzMxNzM@._V1_SX300.jpg",
+                "movie_plot": "Kievan Rus, late 10th century. After the death of his father, the young Viking prince Vladimir of Novgorod is forced into exile across the frozen sea.",
+                "movie_actors": "Danila Kozlovskiy, Svetlana Khodchenkova, Maksim Sukhanov",
+                "movie_trailer": "tt5157456",
+                "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
             },
             {
                 "id": 2,
@@ -23,7 +29,12 @@
                 "year": 2008,
                 "rating": 9.0,
                 "watched": "yes",
-                "country": "Brazil"
+                "country": "Russia",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BMzI0NDU3MDAtOTE5Ni00ODM3LWFlYTgtY2ExZGYyMmU3M2E1XkEyXkFqcGdeQXVyNzI1NzMxNzM@._V1_SX300.jpg",
+                "movie_plot": "Kievan Rus, late 10th century. After the death of his father, the young Viking prince Vladimir of Novgorod is forced into exile across the frozen sea.",
+                "movie_actors": "Danila Kozlovskiy, Svetlana Khodchenkova, Maksim Sukhanov",
+                "movie_trailer": "tt5157456",
+                "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
             }
         ]
     },
@@ -34,24 +45,102 @@
         "email": "bolyn@gmail.com",
         "password": "bobo",
         "date_joined": "23-Jul-2023",
+        "like_count": 3,
         "movies": []
     },
     {
-        "id": "e4924098",
-        "name": "Emma",
-        "username": "Emy",
-        "email": "emma@gmail.com",
-        "password": "123",
-        "date_joined": "25-Jul-2023",
-        "movies": []
-    },
-    {
-        "id": "0fea9194",
+        "id": 3,
         "name": "Courage Ugwuanyi",
         "username": "korage",
         "email": "courageugwuanyi@gmail.com",
-        "password": "$2b$12$9FcNkMtasC2/CKziNvScx.Wb2H3JfvlsM2n4EJltxl3SrRPvR6U2i",
-        "date_joined": "22-Jul-2023",
-        "movies": []
+        "password": "$2b$12$9qnL6hexkpLVUo6WUe0VCeiILapHbLpkDNO6XkQWG6MjtzB.MEoFa",
+        "date_joined": "23-Jul-2023",
+        "like_count": 1,
+        "movies": [
+            {
+                "id": 6,
+                "name": "Breaking Bad",
+                "genre": "Crime, Drama, Thriller",
+                "year": "2008\u20132013",
+                "rating": "9.5",
+                "watched": "no",
+                "country": "United States",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BYmQ4YWMxYjUtNjZmYi00MDQ1LWFjMjMtNjA5ZDdiYjdiODU5XkEyXkFqcGdeQXVyMTMzNDExODE5._V1_SX300.jpg",
+                "movie_plot": "A chemistry teacher diagnosed with inoperable lung cancer turns to manufacturing and selling methamphetamine with a former student in order to secure his family's future.",
+                "movie_actors": "Bryan Cranston, Aaron Paul, Anna Gunn",
+                "movie_trailer": "tt0903747",
+                "awards": "Won 16 Primetime Emmys. 155 wins & 247 nominations total"
+            },
+            {
+                "id": 5,
+                "name": "Life and Passion of Christ",
+                "genre": "Biography, Drama, History",
+                "year": "1907",
+                "rating": "6.5",
+                "watched": "no",
+                "country": "France",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BMTUyOTIwMjQ3Ml5BMl5BanBnXkFtZTgwODkzNTA2MDE@._V1_SX300.jpg",
+                "movie_plot": "Depicting well-known incidents in the life of Jesus Christ, this milestone of early cinema won world fame, huge audiences and a screen life of decades when most secular films of the time measured their commercial life in weeks.",
+                "movie_actors": "N/A",
+                "movie_trailer": "tt1799590",
+                "awards": "N/A"
+            },
+            {
+                "id": 4,
+                "name": "Orange Is the New Black",
+                "genre": "Comedy, Crime, Drama",
+                "year": "2013\u20132019",
+                "rating": "8.1",
+                "watched": "no",
+                "country": "United States",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BYjYyM2FmMmMtZDgyZi00NGU3LWI3NzktODllZDY0YzQyNzgyXkEyXkFqcGdeQXVyMTkxNjUyNQ@@._V1_SX300.jpg",
+                "movie_plot": "Convicted of a decade old crime of transporting drug money to an ex-girlfriend, normally law-abiding Piper Chapman is sentenced to a year and a half behind bars to face the reality of how life-changing prison can really be.",
+                "movie_actors": "Taylor Schilling, Danielle Brooks, Taryn Manning",
+                "movie_trailer": "tt2372162",
+                "awards": "Won 4 Primetime Emmys. 53 wins & 150 nominations total"
+            },
+            {
+                "id": 3,
+                "name": "Biking Borders",
+                "genre": "Documentary",
+                "year": "2021",
+                "rating": "7.7",
+                "watched": "no",
+                "country": "Germany",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BZjE1ZWY4YzEtMWU3ZS00ODZjLTkyNGMtNzAxNjc2ZDI2MDc5XkEyXkFqcGdeQXVyODk4NTQwMDE@._V1_SX300.jpg",
+                "movie_plot": "Two young friends set off on a 15,000 km bicycle tour around the world for a unique fund-raising campaign - barely knowing what to expect, but with the dream of building a school in Guatemala.",
+                "movie_actors": "Max Jabs, Nono Konopka",
+                "movie_trailer": "tt11188850",
+                "awards": "N/A"
+            },
+            {
+                "id": 1,
+                "name": "Inception",
+                "director": "Christopher Nolan",
+                "year": 2010,
+                "rating": 8.8,
+                "watched": "no",
+                "country": "Russia",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BMzI0NDU3MDAtOTE5Ni00ODM3LWFlYTgtY2ExZGYyMmU3M2E1XkEyXkFqcGdeQXVyNzI1NzMxNzM@._V1_SX300.jpg",
+                "movie_plot": "Kievan Rus, late 10th century. After the death of his father, the young Viking prince Vladimir of Novgorod is forced into exile across the frozen sea.",
+                "movie_actors": "Danila Kozlovskiy, Svetlana Khodchenkova, Maksim Sukhanov",
+                "movie_trailer": "tt5157456",
+                "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
+            },
+            {
+                "id": 2,
+                "name": "Vikings",
+                "genre": "Action, Adventure, Drama",
+                "year": "2013\u20132020",
+                "rating": "8.5",
+                "watched": "no",
+                "country": "Ireland, Canada",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BODk4ZjU0NDUtYjdlOS00OTljLTgwZTUtYjkyZjk1NzExZGIzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
+                "movie_plot": "Vikings transports us to the brutal and mysterious world of Ragnar Lothbrok, a Viking warrior and farmer who yearns to explore--and raid--the distant shores across the ocean.",
+                "movie_actors": "Katheryn Winnick, Gustaf Skarsg\u00e5rd, Alexander Ludwig",
+                "movie_trailer": "tt2306299",
+                "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
+            }
+        ]
     }
 ]

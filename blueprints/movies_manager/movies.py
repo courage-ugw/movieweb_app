@@ -1,6 +1,7 @@
-from flask import Blueprint, render_template, url_for, request, redirect
+from flask import Blueprint, render_template, url_for, request, redirect, flash
 from movieweb_app.data_manager.json_data_manager import JSONDataManager
 from movieweb_app.movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
+from flask_login import current_user
 
 # Movies Blueprint
 movies_bp = Blueprint('movies', __name__, template_folder='templates', static_folder='static',
@@ -12,6 +13,33 @@ data_manager = JSONDataManager('movies.json')
 # Creates instance the movie data fetcher object that fetches movies data from IMDb movies api
 movies_data = MovieDataFetcher()
 
+
+def unique_id_generator(user_id):
+    user_movies = data_manager.get_user_movies(user_id)
+    return max([movie['id'] for movie in user_movies]) + 1
+
+
+def get_movies_data(movie_name, user_id):
+
+    # Get movie data from imdb movie api
+    movie_data = movies_data.get_movies_data(movie_name)
+    if movie_data:
+        user_movies_data = {
+            "id": unique_id_generator(user_id),
+            "name": movie_data['Title'],
+            "genre": movie_data['Genre'],
+            "year": movie_data['Year'],
+            "rating": movie_data['imdbRating'],
+            "watched": "no",
+            "country": movie_data['Country'],
+            "poster_url": movie_data['Poster'],
+            "movie_plot": movie_data['Plot'],
+            "movie_actors": movie_data['Actors'],
+            "movie_trailer": movie_data['imdbID'],
+            "awards": movie_data['Awards']
+        }
+
+        return user_movies_data
 
 @movies_bp.route('<int:user_id>')
 def user_account(user_id):
@@ -26,50 +54,29 @@ def add_movie(user_id):
     # Fetch user movies from JSON file
     user_movies = data_manager.get_user_movies(user_id)
 
-    # Fetch all users
-    users = data_manager.get_all_users
-
     # Handle the form submission and movie addition
     if request.method == 'POST':
 
-        # Gets user_name from the form
+        # Gets movie_name from the form
         movie_name = request.form.get('movie_name')
 
-        # Get movie data from imdb movie api*********************************************
-        movie_data = movies_data.get_movies_data(movie_name)
+        # Gets the new movie data from the api
+        new_movies_data = get_movies_data(movie_name, user_id)
 
-        # If user's movies list is empty
-        if not user_movies:
-            user_movies.append({
-                'id': 1,
-                'name': movie_name,
-                'director': movie_data['Director'],
-                'year': movie_data['Year'],
-                'rating': movie_data['imdbRating']
-            })
-        else:
-            # otherwise create new id for new movie
-            new_movie_id = max([movie['id'] for movie in user_movies]) + 1
+        # Adds movie to user's movie list
+        user_movies.insert(0, new_movies_data)
 
-            user_movies.append({
-                'id': new_movie_id,
-                'name': movie_name,
-                'director': movie_data['Director'],
-                'year': movie_data['Year'],
-                'rating': movie_data['imdbRating']
-            })
+        # Save movies to JSON file
+        data_manager.save_user_movies(user_movies, user_id)
 
-        # Add movie to user's movie list
-        for user in users:
-            if user['id'] == user_id:
-                user['movies'] = user_movies
+        flash(f'The {movie_name} has been add to your favourite movie list', 'success')
 
         # Redirect user to user_movies route to  display the list of user's movies
         return redirect(url_for('users.user_movies', user_id=user_id))
 
     else:
         # Handles GET request and displays the add movie form to the user
-        return render_template('movies_manager.html')
+        return render_template('movies_manager.html', user_movies=user_movies, current_user=current_user)
 
 
 @movies_bp.route('<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
@@ -100,7 +107,7 @@ def update_movie(user_id, movie_id):
         return render_template('update_movie.html', user=user), 200
 
 
-@movies_bp.route('<int:user_id>/delete_movie/<int:movie_id>', methods=['GET'])
+@movies_bp.route('<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])
 def delete_movie(user_id, movie_id):
     """ Deletes a specific movie from a user's list """
 

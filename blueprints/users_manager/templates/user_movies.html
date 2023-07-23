@@ -1,7 +1,6 @@
 {% extends "index.html" %}
     {% block CSS %}
     <link rel="stylesheet" href="{{ url_for('users.static', filename='css/layout.css') }}">
-    <link rel="stylesheet" href="{{ url_for('users.static', filename='css/magnific-popup.css') }}">
     {% endblock CSS %}
 
     <!-- Nav bar -->
@@ -14,270 +13,76 @@
    {% endblock users %}
   <!-- end Nav bar -->
 
-   {% block form %}{% endblock form %}
-
     {% block content %}
    <section id="user-movies">
 
        <div class="back-link">
-           <a href="/users" class=""><i class="fa fa-angle-left fa-lg"></i> Go Back to Users</a>
+           <a href="{{ url_for('users.users_list') }}" class=""><i class="fa fa-angle-left fa-lg"></i> Go Back to
+               Users</a>
        </div>
 
       <div class="row">
-         <div class="twelve columns collapsed">
-             <h1>@Korage Movies</h1>
+
+          {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                        <div class="message">
+                            {% for category, message in messages %}
+                                <span class="message {{ category }}">{{ message }}</span>
+                            {% endfor %}
+                        </div>
+                {% endif %}
+            {% endwith %}
+
+         <div class="twelve columns">
+             <h1>@{{ user.username }}</h1>
              <p class="add-bottom">Click movie poster to see more details</p>
 
-            <!-- movies-wrapper -->
-            <div id="movies-wrapper" class="bgrid-quarters s-bgrid-thirds cf">
-          	   <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#coffee" title="">
-                        <img alt="movie-name" src="{{ url_for('users.static', filename='images/portfolio/coffee.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-          					      <h5>Coffee</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
+                <!-- movies-wrapper -->
+                <div id="movies-wrapper" class="bgrid-quarters s-bgrid-thirds">
+                {% if not user.movies %}
+                    <div class="movie-item">
+                        <p>No Movies</p>
+                    </div>
+                {% else %}
+                    {% for movies in user_movies %}
+                       <div class="columns movie-item align-center">
+                          <div class="item-wrap">
+                             <a href="#{{ movies.name.split()[0]  }}" title="" class=" ">
+                                <img alt="movie-name" src="{{ movies.poster_url }}">
+                                <div class="overlay">
+                                   <div class="movie-item-meta">
+                                          <h5>{{ movies.name }}</h5>
+                                   </div>
+                                </div>
+                                <div class="link-icon"><i class="icon-plus"></i></div>
+                             </a>
+                          </div>
+                       </div> <!-- movie-item end -->
+                    {% endfor %}
+                {% endif %}
 
-               <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#console" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/console.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Console</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#judah" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/judah.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Console</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#console" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/console.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Console</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-               <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#into-the-light" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/into-the-light.jpg') }}">
-                        <div class="overlay">
-                           <div class="portfolio-item-meta">
-                               <h5>Into The Light</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#farmer-boy" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/farmerboy.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Farmer Boy</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#girl" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/girl.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Girl</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#origami" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/origami.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Origami</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-                <div class="columns movie-item">
-                  <div class="item-wrap">
-                     <a href="#retrocam" title="">
-                        <img alt="" src="{{ url_for('users.static', filename='images/portfolio/retrocam.jpg') }}">
-                        <div class="overlay">
-                           <div class="movie-item-meta">
-                               <h5>Retrocam</h5>
-                           </div>
-                        </div>
-                        <div class="link-icon"><i class="icon-plus"></i></div>
-                     </a>
-                  </div>
-          		</div> <!-- movie-item end -->
-
-            </div> <!-- movie-wrapper end -->
-
+                </div> <!-- movie-wrapper end -->
          </div> <!-- twelve columns end -->
 
+          {% for movies in user_movies %}
+             <!-- Modal Popup
+              --------------------------------------------------------------- -->
+             <div id="{{ movies.name.split()[0] }}" class="popup-modal mfp-hide">
+                 <div class="square-image">
+                     <img class="scale-with-grid" src="{{ movies.poster_url }}" alt="" />
+                 </div>
 
-         <!-- Modal Popup
-	      --------------------------------------------------------------- -->
-
-         <div id="coffee" class="popup-modal mfp-hide">
-		      <img class="scale-with-grid" src="{{ url_for('users.static', filename='images/portfolio/modals/m-coffee.jpg') }}" alt="" />
-             <div class="movie-plot">
-			      <h4>Coffee Cup</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="movie-director"><i class="fa fa-tag"></i>Directed by: Brandon James</span>
-             </div>
-             <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Movie Trailer</a>
-		         <a class="popup-modal-dismiss">Close</a>
-             </div>
-         </div><!-- coffee-modal End -->
-
-	      </div><!-- modal-02 End -->
-
-         <div id="modal-03" class="popup-modal mfp-hide">
-
-		      <img class="scale-with-grid" src="{{ url_for('users.static', filename='images/portfolio/modals/m-judah.jpg') }}" alt="" />
-
-		      <div class="description-box">
-			      <h4>Judah</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Branding</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-03 End -->
-
-         <div id="console" class="popup-modal mfp-hide">
-
-		      <img class="scale-with-grid" src="images/portfolio/modals/m-intothelight.jpg" alt="" />
-
-		      <div class="description-box">
-			      <h4>Into the Light</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Photography</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-04 End -->
-
-         <div id="farmerboy" class="popup-modal mfp-hide">
-		      <img class="scale-with-grid" src="{{ url_for('users.static', filename='images/portfolio/modals/farmerboy.jpg') }}" alt="" />
-		      <div class="movie-plot">
-			      <h4>Farmer Boy</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="movie-director"><i class="fa fa-tag"></i>Directed by: James Peterson</span>
-		      </div>
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-	      </div><!-- farmerboy-modal End -->
-
-         <div id="farmer-boy" class="popup-modal mfp-hide">
-
-		      <img class="scale-with-grid" src="images/portfolio/modals/m-girl.jpg" alt="" />
-
-		      <div class="description-box">
-			      <h4>Girl</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Photography</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-06 End -->
-
-         <div id="modal-07" class="popup-modal mfp-hide">
-
-		      <img class="scale-with-grid" src="images/portfolio/modals/m-origami.jpg" alt="" />
-
-		      <div class="description-box">
-			      <h4>Origami</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="categories"><i class="fa fa-tag"></i>Branding, Illustration</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-07 End -->
-
-         <div id="retrocam" class="popup-modal mfp-hide">
-
-		      <img class="scale-with-grid" src="{{ url_for('users.static', filename='images/portfolio/modals/m-retrocam.jpg') }}" alt="" />
-
-		      <div class="movie-plot">
-			      <h4>Retrocam</h4>
-			      <p>Proin gravida nibh vel velit auctor aliquet. Aenean sollicitudin, lorem quis bibendum auctor, nisi elit consequat ipsum, nec sagittis sem nibh id elit.</p>
-               <span class="movie-director"><i class="fa fa-tag"></i>Directed By: Photography</span>
-		      </div>
-
-            <div class="link-box">
-               <a href="http://www.behance.net" target="_blank">Details</a>
-		         <a class="popup-modal-dismiss">Close</a>
-            </div>
-
-	      </div><!-- modal-01 End -->
-
-
+                 <div class="movie-plot">
+                      <h4>{{ movies.name }}</h4>
+                      <p>{{ movies.movie_plot }}</p>
+                   <span class="movie-actors"><i class="fa fa-tag"></i><span>Actors: </span>{{ movies.movie_actors }}</span>
+                 </div>
+                 <div class="link-box">
+                   <a href="https://www.imdb.com/title/{{ movies.movie_trailer }}/" target="_blank">Movie Trailer</a>
+                     <a class="popup-modal-dismiss">Close</a>
+                 </div>
+             </div><!-- {{ movies.name }}modal End -->
+          {% endfor %}
       </div> <!-- row End -->
 
    </section>

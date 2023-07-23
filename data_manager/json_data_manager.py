@@ -35,7 +35,9 @@ class JSONDataManager(DataManagerInterface):
     def get_user_movies(self, user_id):
         """ Return a list of all movies for a given user """
         users = self.get_all_users
-        return [user['movies'] for user in users if user['id'] == user_id][0]
+        for user in users:
+            if user['id'] == user_id:
+                return user['movies']
 
     def get_user_by_id(self, user_id):
         """ Return a user with a given user_id """
@@ -71,8 +73,19 @@ class JSONDataManager(DataManagerInterface):
         with open(self.filename, 'w') as file:
             json.dump(users, file, indent=4)
 
+    def save_user_movies(self, user_movies, user_id):
+        """ Saves users to the Json file """
 
-class MoviesInfo():
+        users = self.get_all_users
+        for user in users:
+            if user['id'] == user_id:
+                user['movies'] = user_movies
+
+        with open(self.filename, 'w') as file:
+            json.dump(users, file, indent=4)
+
+
+class MoviesInfo:
     def __init__(self, movies_lst: list):
         self._movies = movies_lst
 
@@ -87,7 +100,10 @@ class MoviesInfo():
 
     @property
     def worst_movie_rating(self):
-        return min([movie['rating'] if 'rating' in self._movies else None for movie in self._movies])
+        movie_ratings = [float(movie['rating']) for movie in self._movies]
+        if movie_ratings:
+            return min(movie_ratings)
+        return movie_ratings
 
     @property
     def recent_movie_release(self):
@@ -96,8 +112,7 @@ class MoviesInfo():
 
     @property
     def total_movies_watched(self):
-        return len([movie['watched'] if 'watched' in self._movies and movie['watched'] == 'yes' else None for movie in \
-                    self._movies])
+        return len([movie['name'] for movie in self._movies if movie['watched'] == 'yes'])
 
     @property
     def movies_count_by_countries(self):
@@ -105,12 +120,23 @@ class MoviesInfo():
         movies_country_count = {}
 
         for movie in self._movies:
-            if movie['country'] not in movies_country_count:
-                movies_country_count['country'] = 1
+            if ',' in movie['country']:
+                country_1, country_2 = movie['country'].split(',')
+                if country_1 not in movies_country_count:
+                    movies_country_count[country_1] = 1
+                elif country_2 not in movies_country_count:
+                    movies_country_count[country_2] = 1
+                else:
+                    movies_country_count[country_1] += 1
+                    movies_country_count[country_2] += 1
             else:
-                movies_country_count['country'] += 1
-
-        return sorted(movies_country_count.items(), key=lambda item: item[1], reverse=True)[0]
+                if movie['country'] not in movies_country_count:
+                    movies_country_count[movie['country']] = 1
+                else:
+                    movies_country_count[movie['country']] += 1
+        if movies_country_count:
+            return sorted(movies_country_count.items(), key=lambda item: item[1], reverse=True)[:2]
+        return movies_country_count
 
     @property
     def top_rated_movie_name(self):
@@ -119,6 +145,8 @@ class MoviesInfo():
 
         for movie in self._movies:
             if movie['name'] not in movies_and_ratings:
-                movies_and_ratings[movie['name']] = movie['rating']
+                movies_and_ratings[movie['name']] = float(movie['rating'])
+        if movies_and_ratings:
+            return sorted(movies_and_ratings.items(), key=lambda item: item[1], reverse=True)[0]
 
-        return sorted(movies_and_ratings.items(), key=lambda item: item[1], reverse=True)[0]
+        return movies_and_ratings

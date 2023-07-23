@@ -27,3 +27,6 @@ class MovieDataFetcher:
             return response[0]['code']['alpha3code']
         except KeyError:
             return None
+
+        except IndexError:
+            return None
