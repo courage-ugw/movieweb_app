@@ -1,0 +1,211 @@
+{% extends "index.html" %}
+    {% block CSS %}
+    <link rel="stylesheet" href="{{ url_for('users.static', filename='css/layout.css') }}">
+    {% endblock CSS %}
+
+<!-- Nav bar -->
+{% block home %}
+  <li ><a href="{{ url_for('home.home') }}">Home</a></li>
+{% endblock home %}
+
+{% block users %}
+<li class="current"><a  href="{{ url_for('users.users_list') }}">Users</a></li>
+{% endblock users %}
+<!-- end Nav bar -->
+
+{% block content %}
+<section id="users">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+                <div class="message">
+                    {% for category, message in messages %}
+                        <span class="message {{ category }}">{{ message }}</span>
+                    {% endfor %}
+                </div>
+        {% endif %}
+    {% endwith %}
+
+  <div class="row wide">
+     <div class="row six main-col align-center">
+
+            {% if current_user.is_authenticated %}
+                <div class="twelve user-movie-info add-bottom signedin-user">
+                   <div class="row">
+                       <img class="profilepic" alt="movie-name"
+                            src="{{ url_for('users.static', filename='images/portfolio/farmerboy.jpg') }}">
+
+                       <h3 class="user pull-left">{{ current_user._name }}</h3> <br>
+                        <p class="pull-left half-bottom">{{ current_user._username }}</p>
+                       <p class="pull-right half-bottom"><em class="date">{{ current_user._date_joined }}</em></p>
+                   </div>
+                   <hr>
+                   <div class="row align-center user-movie-stats">
+                       <div class="row pull-left">
+                            <label for="" class="movie-details pull-left">
+                               Favourite Movies
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               20
+                           </label>
+                        </div>
+
+                       <div class="row pull-left">
+                           <label for="" class="movie-details pull-left">
+                               Movies above 7.0 Rating
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               2
+                           </label>
+                       </div>
+
+                       <div class="row pull-left">
+                           <label for="" class="movie-details pull-left">
+                               Movies Released after 2021
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               4
+                           </label>
+                       </div>
+
+                       <div class="row pull-left">
+                            <label for="" class="movie-details pull-left">
+                               You've Watched
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               5 / 20
+                           </label>
+                       </div>
+
+                       <div class="row pull-left">
+                           <label for="" class="movie-details pull-left">
+                               Worst Movie Rating
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               2.0
+                           </label>
+                       </div>
+
+                       <div class="row pull-left">
+                            <label for="" class="movie-details pull-left">
+                               Most Movies From
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               USA (13)
+                           </label>
+                       </div>
+
+                       <div class="row pull-left">
+                            <label for="" class="movie-details pull-left">
+                               Your Top Rated Movie
+                           </label> <span>&nbsp;</span>
+                           <label for="" class="movie-details-result pull-left">
+                               Pulp Fiction(7.9)
+                           </label>
+                       </div>
+                   </div>
+                   <hr>
+                   <div class="row more-movie-info">
+                       <div class="likes pull-left">
+                           <a href="#"><i class="fa fa-thumbs-up fa-lg"></i></a>
+                          <span class="like-count">42</span>
+                        </div>
+
+                       <a href="/users/user_movies/2"
+                          class="details-link pull-right"><em>Details <i class="fa fa-angle-right"></i></em></a>
+                   </div>
+               </div>
+            {% endif %}
+
+             {% for user in users %}
+                    <div class="twelve user-movie-info add-bottom">
+                       <div class="row">
+                           <img class="profilepic" alt="movie-name"
+                                src="{{ url_for('users.static', filename='images/portfolio/farmerboy.jpg') }}">
+
+                           <h3 class="user pull-left">{{ user.name }}</h3> <br>
+                            <p class="pull-left half-bottom">@{{ user.username }}</p>
+                           <p class="pull-right half-bottom"><em class="date">{{ user.date_joined }}</em></p>
+                       </div>
+                       <hr>
+                       <div class="row align-center user-movie-stats">
+                           <div class="row pull-left">
+                                <label for="" class="movie-details pull-left">
+                                   Favourite Movies
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   20
+                               </label>
+                            </div>
+
+                           <div class="row pull-left">
+                               <label for="" class="movie-details pull-left">
+                                   Movies above 7.0 Rating
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   2
+                               </label>
+                           </div>
+
+                           <div class="row pull-left">
+                               <label for="" class="movie-details pull-left">
+                                   Movies Released after 2021
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   4
+                               </label>
+                           </div>
+
+                           <div class="row pull-left">
+                                <label for="" class="movie-details pull-left">
+                                   You've Watched
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   5 / 20
+                               </label>
+                           </div>
+
+                           <div class="row pull-left">
+                               <label for="" class="movie-details pull-left">
+                                   Worst Movie Rating
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   2.0
+                               </label>
+                           </div>
+
+                           <div class="row pull-left">
+                                <label for="" class="movie-details pull-left">
+                                   Most Movies From
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   USA (13)
+                               </label>
+                           </div>
+
+                           <div class="row pull-left">
+                                <label for="" class="movie-details pull-left">
+                                   Your Top Rated Movie
+                               </label> <span>&nbsp;</span>
+                               <label for="" class="movie-details-result pull-left">
+                                   Pulp Fiction(7.9)
+                               </label>
+                           </div>
+                       </div>
+                       <hr>
+                       <div class="row more-movie-info">
+                           <div class="likes pull-left">
+                               <a href="#"><i class="fa fa-thumbs-up fa-lg"></i></a>
+                              <span class="like-count">42</span>
+                            </div>
+
+                           <a href="/users/user_movies/2"
+                              class="details-link pull-right"><em>Details <i class="fa fa-angle-right"></i></em></a>
+                       </div>
+                   </div>
+             {% endfor %}
+
+           </div>
+     </div>
+</section>
+{% endblock content %}
