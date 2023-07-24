@@ -35,6 +35,7 @@ class JSONDataManager(DataManagerInterface):
     def get_user_movies(self, user_id):
         """ Return a list of all movies for a given user """
         users = self.get_all_users
+
         for user in users:
             if user['id'] == user_id:
                 return user['movies']
@@ -100,7 +101,7 @@ class MoviesInfo:
 
     @property
     def worst_movie_rating(self):
-        movie_ratings = [float(movie['rating']) for movie in self._movies]
+        movie_ratings = [float(movie['rating']) for movie in self._movies if movie is not None]
         if movie_ratings:
             return min(movie_ratings)
         return movie_ratings
@@ -112,7 +113,12 @@ class MoviesInfo:
 
     @property
     def total_movies_watched(self):
-        return len([movie['name'] for movie in self._movies if movie['watched'] == 'yes'])
+
+        watched_movies_count = 0
+        for movie in self._movies:
+            if (movie is not None) and (movie['watched'] == 'yes'):
+                watched_movies_count += 1
+        return watched_movies_count
 
     @property
     def movies_count_by_countries(self):
@@ -120,20 +126,21 @@ class MoviesInfo:
         movies_country_count = {}
 
         for movie in self._movies:
-            if ',' in movie['country']:
-                country_1, country_2 = movie['country'].split(',')
-                if country_1 not in movies_country_count:
-                    movies_country_count[country_1] = 1
-                elif country_2 not in movies_country_count:
-                    movies_country_count[country_2] = 1
+            if movie is not None:
+                if  ',' in movie['country']:
+                    country_1, country_2 = movie['country'].split(',')
+                    if country_1 not in movies_country_count:
+                        movies_country_count[country_1] = 1
+                    elif country_2 not in movies_country_count:
+                        movies_country_count[country_2] = 1
+                    else:
+                        movies_country_count[country_1] += 1
+                        movies_country_count[country_2] += 1
                 else:
-                    movies_country_count[country_1] += 1
-                    movies_country_count[country_2] += 1
-            else:
-                if movie['country'] not in movies_country_count:
-                    movies_country_count[movie['country']] = 1
-                else:
-                    movies_country_count[movie['country']] += 1
+                    if movie['country'] not in movies_country_count:
+                        movies_country_count[movie['country']] = 1
+                    else:
+                        movies_country_count[movie['country']] += 1
         if movies_country_count:
             return sorted(movies_country_count.items(), key=lambda item: item[1], reverse=True)[:2]
         return movies_country_count
@@ -144,7 +151,7 @@ class MoviesInfo:
         movies_and_ratings = {}
 
         for movie in self._movies:
-            if movie['name'] not in movies_and_ratings:
+            if (movie is not None) and (movie['name'] not in movies_and_ratings):
                 movies_and_ratings[movie['name']] = float(movie['rating'])
         if movies_and_ratings:
             return sorted(movies_and_ratings.items(), key=lambda item: item[1], reverse=True)[0]

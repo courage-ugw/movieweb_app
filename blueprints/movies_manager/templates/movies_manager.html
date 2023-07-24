@@ -1,93 +1,102 @@
 {% extends "layout.html" %}
 
-    {% block CSS %}
-    <link rel="stylesheet" href="{{ url_for('movies.static', filename='css/layout.css') }}">
-    {% endblock CSS %}
+{% block CSS %}
+<link rel="stylesheet" href="{{ url_for('movies.static', filename='css/layout.css') }}">
+{% endblock CSS %}
 
-  <!-- Nav bar -->
-    {% block home %}
-      <li ><a href="{{ url_for('home.home') }}">Home</a></li>
-    {% endblock home %}
+<!-- Nav bar -->
+{% block home %}
+<li><a href="{{ url_for('home.home') }}">Home</a></li>
+{% endblock home %}
 
+{% if current_user.is_authenticated %}
+    {% block account %}
+    <li class="current"><a href="{{ url_for('movies.add_movie', user_id=current_user._id) }}">Account</a></li>
+    {% endblock account %}
+{% endif %}
+<!-- end Nav bar -->
+
+{% block content %}
+<section id="movies-manager">
     {% if current_user.is_authenticated %}
-       {% block account %}
-       <li class="current" ><a href="{{ url_for('movies.add_movie', user_id=current_user._id) }}">Account</a></li>
-       {% endblock account %}
-    {% endif %}
-  <!-- end Nav bar -->
+    <div class="account-links">
+        <a href="#" class=""><i class="fas fa-user fa-lg"></i> Update Profile
+        </a>
+    </div>
 
-    {% block content %}
-   <section id="movies-manager">
+    <div class="row">
+        <div class="seven row align-center">
+            <div class="row align-center">
+                <h1><span>Movies Manager</span></h1>
+            </div>
 
-        {% if current_user.is_authenticated %}
-            <div class="account-links">
-               <a href="#" class=""><i class="fas fa-user fa-lg"></i> Update Profile
-               </a>
-           </div>
+            <div class="row add-movie align-center">
+                <!-- I am using current_user._id because of how I defined the properties of the Users Class in models.py. I used `self._id` as conventional practice to restrict data access. -->
+                <form action="{{ url_for('movies.add_movie', user_id=current_user._id) }}" method="POST">
+                    <div>
+                        <input type="text" placeholder="Enter Movie Name" name="movie_name">
+                        <button type="submit">Add Movie</button>
+                    </div>
+                </form>
+            </div>
 
-           <div class="row">
-             <div class="seven row align-center">
-                 <div class="row align-center">
-                    <h1><span>Movies Manager</span></h1>
-                 </div>
+            <p>Click the eye icon to toggle Watched Status! </p>
+            <p>Default is No.</p>
 
-                 <div class="row add-movie align-center">
-                    <!--   I am user current_user._id because of how I defined the properties of Users Class in the
-                    constructor in models.py. I used `self._id` as conventional practice to restrict data access.
-                                 -->
-                     <form action="{{ url_for('movies.add_movie', user_id=current_user._id) }}"  method="POST">
-                         <div>
-                             <input type="text" placeholder="Enter Movie Name" name="movie_name">
-                             <button type="submit">Add Movie</button>
-                         </div>
-                     </form>
-                 </div>
-
-                <p>Click the eye icon to toggle Watched Status! </p>
-                 <p>Default is No.</p>
-
-                <div class="row movie-list-wrapper">
-                    <ul class=" movie-list">
-                        {% for movies in user_movies %}
+            <div class="row movie-list-wrapper">
+                <ul class="movie-list">
+                    {% for movies in user_movies %}
+                        {% if movies %}
                             <li class="add-bottom">
-                                <span>{{ movies.name }}</span>
-                                <div>
-                                    <form action="">
-                                        <button type="submit">
-                                            <i class="fas fa-edit fa-lg"></i>
+                            <span>{{ movies.name }}</span>
+                            <div>
+                                <form action="#">
+                                    <button type="submit">
+                                        <i class="fas fa-edit fa-lg"></i>
+                                    </button>
+                                </form>
+
+                                 <form action="" class="item-wrap">
+                                        <button>
+                                            <a href="#{{ movies.id }}">
+                                                <i class="fas fa-trash fa-lg"></i>
+                                            </a>
                                         </button>
                                     </form>
 
-                                    <form action="" class="">
-                                        <a href="#delete">
-                                            <i class="fas fa-trash fa-lg"></i>
-                                        </a>
-                                    </form>
-
-                                    <form action="">
-                                        <button type="submit" value="0">
-                                            <i class="fas fa-eye-slash fa-lg"></i>
-                                        </button>
-                                    </form>
-                                </div>
-                                <label>
-                                    Already Watched Movie?:<span class="watched">No</span>
-                                </label>
-                            </li>
-                        {% endfor %}
-                    </ul>
-                    <!--     modal               -->
-                    <div id="delete" class=" ">
+                                <button type="button" class="toggle-watched-btn" data-movie-id="{{ movies.id }}" data-watched="0">
+                                    <i class="fas fa-eye-slash fa-lg"></i>
+                                </button>
+                            </div>
+                            <label>
+                                Already Watched Movie?:
+                                <span class="watched">No</span>
+                            </label>
+                        </li>
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+             {% for movies in user_movies %}
+                {% if movies %}
+                    <!--     Delete Button modal               -->
+                    <div id="{{ movies.id }}" class=" popup-modal mfp-hide">
                         <p>Are you sure you want to delete this movie ?</p>
-                        <form action="">
+                        <form
+                                action="{{ url_for('movies.delete_movie', user_id=current_user._id, movie_id=movies.id) }}"
+                              method="POST">
                             <button type="submit">
-                                <i class="fas fa-edit fa-lg"></i>
+                                Delete
+                            </button>
+                            <button class="popup-modal-dismiss">
+                                cancel
                             </button>
                         </form>
-                </div>
-                </div>
-             </div>
-          </div>
-        {% endif %}
-   </section>
-    {% endblock content %}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</section>
+{% endblock content %}

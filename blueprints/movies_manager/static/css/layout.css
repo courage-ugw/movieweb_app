@@ -126,6 +126,10 @@ ul#nav li.current a { color: #F06000; }
     margin: 0 10px;
 }
 
+.fa-trash {
+    color: #fff;
+}
+
 .movie-list-wrapper .movie-list {
   	margin-top: 36px;
    list-style: none;
@@ -148,7 +152,6 @@ ul#nav li.current a { color: #F06000; }
     color: #313131;
     text-transform: uppercase;
     letter-spacing: 2px;
-    font-weight: bold;
     padding: 10px;
 }
 
@@ -158,9 +161,24 @@ label span.watched {
 }
 
 .popup-modal {
-	width: 30px;
-	background: #fff;
-	position: relative;
-	margin: 0 auto;
+	max-width: 300px;
+    background: #fff;
+    position: relative;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
+    font: 15px 'opensans-bold', sans-serif;
+	font-weight: bold;
+    color: #313131;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
 
+.popup-modal button {
+    display: inline;
+    font: 12px 'opensans-bold', sans-serif;
+    font-weight: bold;
+    padding: 10px;
+    border-radius: 10px;
+    margin: 0 10px;
 }

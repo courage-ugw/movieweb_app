@@ -16,7 +16,7 @@ movies_data = MovieDataFetcher()
 
 def unique_id_generator(user_id):
     user_movies = data_manager.get_user_movies(user_id)
-    return max([movie['id'] for movie in user_movies]) + 1
+    return max([movie['id'] for movie in user_movies if movie is not None]) + 1
 
 
 def get_movies_data(movie_name, user_id):
@@ -24,22 +24,24 @@ def get_movies_data(movie_name, user_id):
     # Get movie data from imdb movie api
     movie_data = movies_data.get_movies_data(movie_name)
     if movie_data:
-        user_movies_data = {
-            "id": unique_id_generator(user_id),
-            "name": movie_data['Title'],
-            "genre": movie_data['Genre'],
-            "year": movie_data['Year'],
-            "rating": movie_data['imdbRating'],
-            "watched": "no",
-            "country": movie_data['Country'],
-            "poster_url": movie_data['Poster'],
-            "movie_plot": movie_data['Plot'],
-            "movie_actors": movie_data['Actors'],
-            "movie_trailer": movie_data['imdbID'],
-            "awards": movie_data['Awards']
-        }
-
-        return user_movies_data
+        try:
+            user_movies_data = {
+                "id": unique_id_generator(user_id),
+                "name": movie_data['Title'],
+                "genre": movie_data['Genre'],
+                "year": movie_data['Year'],
+                "rating": movie_data['imdbRating'],
+                "watched": "no",
+                "country": movie_data['Country'],
+                "poster_url": movie_data['Poster'],
+                "movie_plot": movie_data['Plot'],
+                "movie_actors": movie_data['Actors'],
+                "movie_trailer": movie_data['imdbID'],
+                "awards": movie_data['Awards']
+            }
+            return user_movies_data
+        except KeyError:
+            pass
 
 @movies_bp.route('<int:user_id>')
 def user_account(user_id):
@@ -111,18 +113,18 @@ def update_movie(user_id, movie_id):
 def delete_movie(user_id, movie_id):
     """ Deletes a specific movie from a user's list """
 
-    # Get user details
-    user = data_manager.get_user_by_id(user_id)
+    # Fetch user movies from JSON file
+    user_movies = data_manager.get_user_movies(user_id)
 
-    # Gets the index of movie to be deleted
-    movie_index = 0
-    for movie in user['movies']:
-        if movie['id'] == movie_id:
-            movie_index = user['movies'].index(movie)
-            break
+    movie_to_delete = next((movie for movie in user_movies if (movie is not None) and (movie['id'] == movie_id) ), None)
 
-    # Deletes the movie
-    user['movies'].pop(movie_index)
+    if movie_to_delete:
+        user_movies.remove(movie_to_delete)
+
+    # Save movies to JSON file
+    data_manager.save_user_movies(user_movies, user_id)
+
+    flash(f'{movie_to_delete["name"]} has been deleted successfully', 'success')
 
     # Redirects user to the user movie list page
-    return redirect(url_for('users.user_movies', user_id=user_id)), 200
+    return redirect(url_for('users.user_movies', user_id=user_id))

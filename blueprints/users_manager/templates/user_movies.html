@@ -45,19 +45,21 @@
                     </div>
                 {% else %}
                     {% for movies in user_movies %}
-                       <div class="columns movie-item align-center">
-                          <div class="item-wrap">
-                             <a href="#{{ movies.name.split()[0]  }}" title="" class=" ">
-                                <img alt="movie-name" src="{{ movies.poster_url }}">
-                                <div class="overlay">
-                                   <div class="movie-item-meta">
-                                          <h5>{{ movies.name }}</h5>
-                                   </div>
-                                </div>
-                                <div class="link-icon"><i class="icon-plus"></i></div>
-                             </a>
-                          </div>
-                       </div> <!-- movie-item end -->
+                        {% if movies %}
+                           <div class="columns movie-item align-center">
+                              <div class="item-wrap">
+                                 <a href="#{{ movies.name.split()[0]  }}" title="" class=" ">
+                                    <img alt="movie-name" src="{{ movies.poster_url }}">
+                                    <div class="overlay">
+                                       <div class="movie-item-meta">
+                                              <h5>{{ movies.name }}</h5>
+                                       </div>
+                                    </div>
+                                    <div class="link-icon"><i class="icon-plus"></i></div>
+                                 </a>
+                              </div>
+                           </div> <!-- movie-item end -->
+                        {% endif %}
                     {% endfor %}
                 {% endif %}
 
@@ -65,23 +67,25 @@
          </div> <!-- twelve columns end -->
 
           {% for movies in user_movies %}
-             <!-- Modal Popup
-              --------------------------------------------------------------- -->
-             <div id="{{ movies.name.split()[0] }}" class="popup-modal mfp-hide">
-                 <div class="square-image">
-                     <img class="scale-with-grid" src="{{ movies.poster_url }}" alt="" />
-                 </div>
+              {% if movies %}
+                 <!-- Modal Popup
+                  --------------------------------------------------------------- -->
+                 <div id="{{ movies.name.split()[0] }}" class="popup-modal mfp-hide">
+                     <div class="square-image">
+                         <img class="scale-with-grid" src="{{ movies.poster_url }}" alt="" />
+                     </div>
 
-                 <div class="movie-plot">
-                      <h4>{{ movies.name }}</h4>
-                      <p>{{ movies.movie_plot }}</p>
-                   <span class="movie-actors"><i class="fa fa-tag"></i><span>Actors: </span>{{ movies.movie_actors }}</span>
-                 </div>
-                 <div class="link-box">
-                   <a href="https://www.imdb.com/title/{{ movies.movie_trailer }}/" target="_blank">Movie Trailer</a>
-                     <a class="popup-modal-dismiss">Close</a>
-                 </div>
-             </div><!-- {{ movies.name }}modal End -->
+                     <div class="movie-plot">
+                          <h4>{{ movies.name }}</h4>
+                          <p>{{ movies.movie_plot }}</p>
+                       <span class="movie-actors"><i class="fa fa-tag"></i><span>Actors: </span>{{ movies.movie_actors }}</span>
+                     </div>
+                     <div class="link-box">
+                       <a href="https://www.imdb.com/title/{{ movies.movie_trailer }}/" target="_blank">Movie Trailer</a>
+                         <a class="popup-modal-dismiss">Close</a>
+                     </div>
+                 </div><!-- {{ movies.name }}modal End -->
+              {% endif %}
           {% endfor %}
       </div> <!-- row End -->
 
