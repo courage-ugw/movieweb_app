@@ -78,7 +78,9 @@
                      <div class="movie-plot">
                           <h4>{{ movies.name }}</h4>
                           <p>{{ movies.movie_plot }}</p>
-                       <span class="movie-actors"><i class="fa fa-tag"></i><span>Actors: </span>{{ movies.movie_actors }}</span>
+                       <span class="movie-actors"><span>Actors: </span>{{ movies.movie_actors }}</span>
+                       <span class="movie-actors"><i class="fa fa-tag"></i><span>Genre: </span>{{ movies.genre
+                           }}</span>
                      </div>
                      <div class="link-box">
                        <a href="https://www.imdb.com/title/{{ movies.movie_trailer }}/" target="_blank">Movie Trailer</a>

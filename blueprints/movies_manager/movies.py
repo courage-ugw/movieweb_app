@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from movieweb_app.data_manager.json_data_manager import JSONDataManager
 from movieweb_app.movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
-from flask_login import current_user
+from movieweb_app.blueprints.movies_manager.forms import UpdateMovieForm
+
+from flask_login import current_user, login_required
 
 # Movies Blueprint
 movies_bp = Blueprint('movies', __name__, template_folder='templates', static_folder='static',
@@ -31,7 +33,7 @@ def get_movies_data(movie_name, user_id):
                 "genre": movie_data['Genre'],
                 "year": movie_data['Year'],
                 "rating": movie_data['imdbRating'],
-                "watched": "no",
+                "watched": "No",
                 "country": movie_data['Country'],
                 "poster_url": movie_data['Poster'],
                 "movie_plot": movie_data['Plot'],
@@ -43,13 +45,9 @@ def get_movies_data(movie_name, user_id):
         except KeyError:
             pass
 
-@movies_bp.route('<int:user_id>')
-def user_account(user_id):
-    user = data_manager.get_user_by_id(user_id)
-    return render_template('movies_manager.html', user=user)
-
 
 @movies_bp.route('<int:user_id>/add_movie', methods=['GET', 'POST'])
+@login_required
 def add_movie(user_id):
     """ Adds movies to user's list """
 
@@ -82,34 +80,39 @@ def add_movie(user_id):
 
 
 @movies_bp.route('<int:user_id>/update_movie/<int:movie_id>', methods=['GET', 'POST'])
+@login_required
 def update_movie(user_id, movie_id):
     """ Updates details of a specific movie in a user's movies list """
 
-    # Get user details
-    user = data_manager.get_user_by_id(user_id)
+    # Fetch user movies from JSON file
+    user_movies = data_manager.get_user_movies(user_id)
 
-    # Handle the form submission and movie update
-    if request.method == 'POST':
-        movie_name = request.form.get('movie_name')
-        movie_director = request.form.get('movie_director')
-        movie_year = request.form.get('movie_year')
-        movie_rating = request.form.get('movie_rating')
+    movie_to_update = next((movie for movie in user_movies if (movie is not None) and (movie['id'] == movie_id)),
+                           None)
+    if request.method == 'GET':
+        # Handle GET request and render the update movie html
+        return render_template('update_movie.html',  user_id=user_id, user_movies=movie_to_update)
+    else:
+        for movie in user_movies:
+            # Update movie detail
+            if (movie is not None) and (movie['id'] == movie_id):
+                movie['name_actors'] = request.form.get('movie_actors')
+                movie['movie_genre'] = request.form.get('movie_genre')
+                movie['movie_plot'] = request.form.get('movie_plot')
+                break
 
-        for movie in user['movies']:
-            if movie['id'] == movie_id:
-                movie['name'] = movie_name
-                movie['director'] = movie_director
-                movie['year'] = movie_year
-                movie['rating'] = movie_rating
+        # Save movies to JSON file
+        data_manager.save_user_movies(user_movies, user_id)
+
+        flash(f'{movie_to_update["name"]} has been updated successfully', 'success')
 
         # Redirects user to the user movie list page
-        return redirect(url_for('users.user_movies', user_id=user_id)), 200
-    else:
-        # Handle GET request and render the update movie html
-        return render_template('update_movie.html', user=user), 200
+        return redirect(url_for('users.user_movies', user_id=user_id))
+
 
 
 @movies_bp.route('<int:user_id>/delete_movie/<int:movie_id>', methods=['POST'])
+@login_required
 def delete_movie(user_id, movie_id):
     """ Deletes a specific movie from a user's list """
 
@@ -128,3 +131,28 @@ def delete_movie(user_id, movie_id):
 
     # Redirects user to the user movie list page
     return redirect(url_for('users.user_movies', user_id=user_id))
+
+
+@movies_bp.route('<int:user_id>/watched_movie/<int:movie_id>/<string:watched_status>', methods=['POST'])
+@login_required
+def watched_movie(user_id, movie_id, watched_status):
+    """ Updates details of a specific movie in a user's movies list """
+
+    # Fetch user movies from JSON file
+    user_movies = data_manager.get_user_movies(user_id)
+
+    for movie in user_movies:
+        # Update the movie watched status
+        if (movie is not None) and (movie['id'] == movie_id):
+            if watched_status.lower() == 'no':
+                movie['watched'] = 'Yes'
+                break
+            else:
+                movie['watched'] = 'No'
+                break
+
+    # Save movies to JSON file
+    data_manager.save_user_movies(user_movies, user_id)
+
+    # Redirects user to the movies manager page
+    return redirect(url_for('movies.add_movie', user_id=user_id))

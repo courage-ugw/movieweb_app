@@ -24,7 +24,7 @@
     </div>
     <div class="row">
         <div class="seven row align-center">
-            <form action="/users/signup" method="POST"  class="align-center">
+            <form action="{{ url_for('users.signup') }}" method="POST"  class="align-center">
                  {{ form.hidden_tag() }}
 
                 <fieldset class="align-center">

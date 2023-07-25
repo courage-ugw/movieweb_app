@@ -31,6 +31,7 @@ def serialize_user_data():
             "recent_movies": movies_info.recent_movie_release,
             "movies_watched": movies_info.total_movies_watched,
             "worst_rating": movies_info.worst_movie_rating,
+            "movie_awards": movies_info.total_movies_with_award,
             "most_movies_countries": movies_info.movies_count_by_countries,
             "top_rated_movie_name": movies_info.top_rated_movie_name,
             "movies": user['movies']
@@ -182,4 +183,16 @@ def signout():
     """ signout user from the app """
 
     logout_user()
+    return redirect(url_for('home.home'))
+
+@users_bp.route('/delete_account/<int:user_id>', methods=['POST'])
+def delete_account(user_id):
+
+    logout_user()
+
+    users = data_manager.get_all_users
+    user = data_manager.get_user_by_id(user_id)
+    users.remove(user)
+    data_manager.save_users(users=users)
+
     return redirect(url_for('home.home'))

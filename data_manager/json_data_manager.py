@@ -74,6 +74,12 @@ class JSONDataManager(DataManagerInterface):
         with open(self.filename, 'w') as file:
             json.dump(users, file, indent=4)
 
+    def save_users(self, users):
+        """ Saves users to the Json file """
+
+        with open(self.filename, 'w') as file:
+            json.dump(users, file, indent=4)
+
     def save_user_movies(self, user_movies, user_id):
         """ Saves users to the Json file """
 
@@ -116,9 +122,18 @@ class MoviesInfo:
 
         watched_movies_count = 0
         for movie in self._movies:
-            if (movie is not None) and (movie['watched'] == 'yes'):
+            if (movie is not None) and (movie['watched'].lower() == 'yes'):
                 watched_movies_count += 1
         return watched_movies_count
+
+    @property
+    def total_movies_with_award(self):
+
+        movies_award_count = 0
+        for movie in self._movies:
+            if (movie is not None) and (movie['awards'].lower() != 'n/a'):
+                movies_award_count += 1
+        return movies_award_count
 
     @property
     def movies_count_by_countries(self):

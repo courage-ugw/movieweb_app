@@ -18,9 +18,12 @@
 
 {% block content %}
 <section id="movies-manager">
+
     {% if current_user.is_authenticated %}
-    <div class="account-links">
+    <div class="account-links item-wrap">
         <a href="#" class=""><i class="fas fa-user fa-lg"></i> Update Profile
+        </a>
+        <a href="#{{ current_user._id }}" class=""><i class="fas fa-ban "></i> Delete Account
         </a>
     </div>
 
@@ -50,27 +53,31 @@
                             <li class="add-bottom">
                             <span>{{ movies.name }}</span>
                             <div>
-                                <form action="#">
+                                <button type="submit">
+                                    <a href="{{ url_for('movies.update_movie', user_id=current_user._id, movie_id=movies.id) }}" >
+                                        <i class="fas fa-edit "></i>
+                                    </a>
+                                </button>
+
+                                <button class="item-wrap">
+                                    <a href="#{{ movies.id }}">
+                                        <i class="fas fa-trash  "></i>
+                                    </a>
+                                </button>
+                                <form
+                                        action="{{ url_for('movies.watched_movie', user_id=current_user._id, movie_id=movies.id, watched_status=movies.watched) }}" method="POST">
                                     <button type="submit">
-                                        <i class="fas fa-edit fa-lg"></i>
+                                        {% if movies.watched == 'Yes' %}
+                                            <i class="fas fa-eye fa-lg"></i>
+                                        {% else %}
+                                            <i class="fas fa-eye-slash "></i>
+                                        {% endif %}
                                     </button>
                                 </form>
-
-                                 <form action="" class="item-wrap">
-                                        <button>
-                                            <a href="#{{ movies.id }}">
-                                                <i class="fas fa-trash fa-lg"></i>
-                                            </a>
-                                        </button>
-                                    </form>
-
-                                <button type="button" class="toggle-watched-btn" data-movie-id="{{ movies.id }}" data-watched="0">
-                                    <i class="fas fa-eye-slash fa-lg"></i>
-                                </button>
                             </div>
                             <label>
                                 Already Watched Movie?:
-                                <span class="watched">No</span>
+                                <span class="watched">{{ movies.watched }}</span>
                             </label>
                         </li>
                         {% endif %}
@@ -95,6 +102,20 @@
                     </div>
                 {% endif %}
             {% endfor %}
+
+            <div id="{{ current_user._id }}" class=" popup-modal mfp-hide">
+                <p>Are you sure you want to delete your account?</p>
+                <form
+                        action="{{ url_for('users.delete_account', user_id=current_user._id) }}"
+                      method="POST">
+                    <button type="submit">
+                        Delete
+                    </button>
+                    <button class="popup-modal-dismiss">
+                        cancel
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
     {% endif %}

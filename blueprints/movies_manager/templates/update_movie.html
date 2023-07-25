@@ -9,40 +9,45 @@
   <li ><a href="{{ url_for('home.home') }}">Home</a></li>
 {% endblock home %}
 
-{% block signup %}
-<li class="current"><a href="{{ url_for('users.signup') }}">Sign up</a></li>
-{% endblock signup %}
+{% block account %}
+    <li class="current"><a href="{{ url_for('movies.add_movie', user_id=current_user._id) }}">Account</a></li>
+{% endblock account %}
 <!-- end Nav bar -->
 
 {% block content %}
 <section id="sign-up">
 
-     {% include "messages.html" %}
-
     <div class="row align-center">
-        <p> SiGN-UP</p>
+        <p> UPDATE </p>
     </div>
     <div class="row">
         <div class="seven row align-center">
-            <form action="/users/signup" method="POST"  class="align-center">
-                 {{ form.hidden_tag() }}
+            <form action="{{ url_for('movies.update_movie', user_id=user_id, movie_id=user_movies.id) }}" method="POST"
+                  class="align-center">
 
                 <fieldset class="align-center">
-                    {{ form.display_name(class="form-input", placeholder=" Enter your display name (Optional)")}}
+                    <label for="movie_name">Title (Readonly) </label>
+                    <input type="text" id="movie_name" name="movie_name" class="form-input" required readonly="readonly"
+                           value="{{ user_movies.name }}">
 
-                    {{ form.username(class="form-input", placeholder=" Enter your username")}}
+                    <label for="movie_actors">Actors: </label>
+                    <input type="text" id="movie_actors" name="actors" class="form-input" required
+                           value="{{ user_movies.movie_actors }}">
 
-                    {{ form.email(class="form-input", placeholder=" Enter your email")}}
+                    <label for="movie_genre">Genre: </label>
+                    <input type="text" id="movie_genre" name="movie_genre" class="form-input" required
+                           value="{{ user_movies.genre }}">
 
-                    {{ form.password(class="form-input", placeholder=" Type your password")}}
-
-                    {{ form.confirm_password(class="form-input", placeholder=" Confirm password")}}
+                    <label for="movie_plot">Movie Plot: </label>
+                    <textarea id="movie_plot" name="movie_plot" class="form-input" required
+                              rows="5"> {{ user_movies.movie_plot }} </textarea>
 
                     <div>
-                        <button type="submit" class="signup-button">{{ form.submit.label.text }}</button>
+                        <button type="submit" class="">Update</button>
                     </div>
                 </fieldset>
             </form>
+
         </div>
 
     </div>

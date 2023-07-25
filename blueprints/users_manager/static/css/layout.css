@@ -384,10 +384,10 @@ ul#nav li.current a { color: #F06000; }
 
 #sign-up label, #sign-in label {
    font: 15px/24px 'opensans-bold', sans-serif;
-   margin: 12px 0;
+   margin: 0 0 0 50px;
    color: #6c6685;
-	display: inline-block;
-	float: left;
+   display: inline-block;
+   float: left;
    width: 26%;
 }
 
@@ -447,6 +447,10 @@ ul#nav li.current a { color: #F06000; }
 #sign-in button.signup-button:hover {
 	color: #fff;
 	background: #11ABB0;
+}
+
+.signup-ref-link {
+    margin-right: 20px;
 }
 
 /* Messages

@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField
+from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 from movieweb_app.data_manager.json_data_manager import JSONDataManager
 
@@ -8,7 +8,7 @@ class SignupForm(FlaskForm):
     """
     Signup Form for users
     """
-    display_name = StringField('Display Name', validators=[Length(min=2, max=20)])
+    display_name = StringField('Display Name', validators=[DataRequired(), Length(min=2, max=20)])
     username = StringField('Username', validators=[DataRequired(), Length(min=2, max=20)])
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -54,5 +54,5 @@ class SigninForm(FlaskForm):
 
     email = StringField('Email', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
-    remember_me = BooleanField('Remember Me')
+    # remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')

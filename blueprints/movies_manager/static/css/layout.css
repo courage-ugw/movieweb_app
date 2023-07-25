@@ -60,6 +60,11 @@ ul#nav li.current a { color: #F06000; }
    overflow: hidden;
 }
 
+#movies-manager a {
+    font: 14px/20px 'opensans-bold', sans-serif;
+    margin: 0 8px;
+}
+
 #movies-manager a, #movies-manager a:visited  { color: #11ABB0; }
 #movies-manager a:hover, #movies-manager a:focus { color: #313131; }
 
@@ -119,15 +124,22 @@ ul#nav li.current a { color: #F06000; }
 
 .movie-list-wrapper button {
     display: inline;
-    font: 10px 'opensans-bold', sans-serif;
+    font: 8px 'opensans-bold', sans-serif;
     font-weight: bold;
     padding: 10px;
     border-radius: 10px;
     margin: 0 10px;
+    height: 40px;
+    width: auto;
+    text-align: center;
 }
 
-.fa-trash {
+.fa-trash, .fa-edit {
     color: #fff;
+}
+
+.fa-eye-slash, fa-eye {
+    font-size: 12px;
 }
 
 .movie-list-wrapper .movie-list {
