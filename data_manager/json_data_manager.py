@@ -107,7 +107,7 @@ class MoviesInfo:
 
     @property
     def worst_movie_rating(self):
-        movie_ratings = [float(movie['rating']) for movie in self._movies if movie is not None]
+        movie_ratings = [float(movie['rating']) for movie in self._movies if (movie is not None) and (movie['rating']  != 'N/A')]
         if movie_ratings:
             return min(movie_ratings)
         return movie_ratings
@@ -143,7 +143,7 @@ class MoviesInfo:
         for movie in self._movies:
             if movie is not None:
                 if  ',' in movie['country']:
-                    country_1, country_2 = movie['country'].split(',')
+                    country_1, country_2 = movie['country'].split(',')[:2]
                     if country_1 not in movies_country_count:
                         movies_country_count[country_1] = 1
                     elif country_2 not in movies_country_count:
@@ -167,7 +167,8 @@ class MoviesInfo:
 
         for movie in self._movies:
             if (movie is not None) and (movie['name'] not in movies_and_ratings):
-                movies_and_ratings[movie['name']] = float(movie['rating'])
+                if movie['rating'] != 'N/A':
+                    movies_and_ratings[movie['name']] = float(movie['rating'])
         if movies_and_ratings:
             return sorted(movies_and_ratings.items(), key=lambda item: item[1], reverse=True)[0]
 
