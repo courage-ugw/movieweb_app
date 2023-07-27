@@ -20,7 +20,7 @@ movies_data = MovieDataFetcher()
 
 def unique_id_generator(user_id):
     user_movies = data_manager.get_user_movies(user_id)
-    if len(user_movies) == ONE:
+    if not any(user_movies):
         return ONE
 
     return max([movie['id'] for movie in user_movies if movie is not None]) + ONE
