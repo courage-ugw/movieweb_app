@@ -1,10 +1,10 @@
 import json
 from os.path import dirname, join, exists
-from movieweb_app.data_manager.data_manager_interface import DataManagerInterface
+from .data_manager_interface import DataManagerInterface
 
 
 class JSONDataManager(DataManagerInterface):
-    # Root Path where the file folder
+    # Root Path to the file folder
     _project_root = dirname(dirname(__file__))
 
     def __init__(self, filename):

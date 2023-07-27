@@ -1,7 +1,8 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, PasswordField, BooleanField, TextAreaField
+from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
-from movieweb_app.data_manager.json_data_manager import JSONDataManager
+
+from ...data_manager.json_data_manager import JSONDataManager
 
 
 class SignupForm(FlaskForm):

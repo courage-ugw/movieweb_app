@@ -3,9 +3,10 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 
-from movieweb_app.blueprints.users_manager.user_auth import SignupForm, SigninForm
-from movieweb_app.data_manager.json_data_manager import JSONDataManager, MoviesInfo
-from movieweb_app.utils import bcrypt
+from ...blueprints.users_manager.user_auth import SignupForm, SigninForm
+from ...data_manager.json_data_manager import JSONDataManager, MoviesInfo
+from ...utils import bcrypt
+from ...models import User
 
 # Initializing the Blueprint object
 users_bp = Blueprint('users', __name__, template_folder='templates', static_folder='static',
@@ -163,7 +164,7 @@ def signin():
         user = data_manager.get_user_by_email(form.email.data)
 
         if user and bcrypt.check_password_hash(user.get('password'), form.password.data):
-            user_data = models.User(user.get('id', None), user.get('name', None), user.get('username', None),
+            user_data = User(user.get('id', None), user.get('name', None), user.get('username', None),
                                     user.get('email', None),user.get('password', None), user.get('date_joined', None),
                                     user.get('movies', None))
             login_user(user_data)

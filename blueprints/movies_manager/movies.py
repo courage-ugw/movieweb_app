@@ -1,7 +1,11 @@
 from flask import Blueprint, render_template, url_for, request, redirect, flash
-from movieweb_app.data_manager.json_data_manager import JSONDataManager
-from movieweb_app.movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
 from flask_login import current_user, login_required
+
+from ...data_manager.json_data_manager import JSONDataManager
+from ...movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
+
+# Constant
+ONE = 1
 
 # Movies Blueprint
 movies_bp = Blueprint('movies', __name__, template_folder='templates', static_folder='static',
@@ -16,7 +20,11 @@ movies_data = MovieDataFetcher()
 
 def unique_id_generator(user_id):
     user_movies = data_manager.get_user_movies(user_id)
-    return max([movie['id'] for movie in user_movies if movie is not None]) + 1
+    if len(user_movies) == ONE:
+        return ONE
+
+    return max([movie['id'] for movie in user_movies if movie is not None]) + ONE
+
 
 
 def get_movies_data(movie_name, user_id):
@@ -154,3 +162,4 @@ def watched_movie(user_id, movie_id, watched_status):
 
     # Redirects user to the movies manager page
     return redirect(url_for('movies.add_movie', user_id=user_id))
+

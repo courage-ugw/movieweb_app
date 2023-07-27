@@ -1,15 +1,4 @@
-from movieweb_app.utils import login_manager
-from movieweb_app.data_manager.json_data_manager import JSONDataManager
 from flask_login import UserMixin
-
-
-@login_manager.user_loader
-def load_user(user_id):
-    # Query your database or data source to get the user by user_id
-    user_data = JSONDataManager('movies.json').get_user_by_id(int(user_id))
-    return User(user_data.get('id', None), user_data.get('name', None), user_data.get('username', None),
-                user_data.get('email', None), user_data.get('password', None), user_data.get('date_joined', None),
-                user_data.get('movies', None))
 
 
 class User(UserMixin):

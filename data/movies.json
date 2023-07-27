@@ -175,5 +175,59 @@
                 "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
             }
         ]
+    },
+    {
+        "id": 4,
+        "name": "Courage Glorious",
+        "username": "khorage",
+        "email": "gloriouschild11@gmail.com",
+        "password": "$2b$12$FMNiru.H/Yf0gB5XX1QJFOQrWd5a0xl4ME9/DfpEZ8fruMi4figKO",
+        "date_joined": "27-Jul-2023",
+        "like_count": 0,
+        "movies": [
+            {
+                "id": 3,
+                "name": "Game of Thrones",
+                "genre": "Action, Adventure, Drama",
+                "year": "2011\u20132019",
+                "rating": "9.2",
+                "watched": "No",
+                "country": "United States, United Kingdom",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BN2IzYzBiOTQtNGZmMi00NDI5LTgxMzMtN2EzZjA1NjhlOGMxXkEyXkFqcGdeQXVyNjAwNDUxODI@._V1_SX300.jpg",
+                "movie_plot": "Nine noble families fight for control over the lands of Westeros, while an ancient enemy returns after being dormant for a millennia.",
+                "movie_actors": "Emilia Clarke, Peter Dinklage, Kit Harington",
+                "movie_trailer": "tt0944947",
+                "awards": "Won 59 Primetime Emmys. 389 wins & 634 nominations total"
+            },
+            {
+                "id": 2,
+                "name": "Legend of the Seeker",
+                "genre": "Action, Adventure, Drama",
+                "year": "2008\u20132010",
+                "rating": "7.6",
+                "watched": "No",
+                "country": "United States, New Zealand",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BODcyNTM4MjUwOF5BMl5BanBnXkFtZTcwNTE5Mjc2Nw@@._V1_SX300.jpg",
+                "movie_plot": "After the mysterious murder of his father, a son's search for answers begins a momentous fight against tyranny.",
+                "movie_actors": "Craig Horner, Bridget Regan, Bruce Spence",
+                "movie_trailer": "tt0844653",
+                "awards": "Won 1 Primetime Emmy. 2 wins & 2 nominations total"
+            },
+            {
+                "id": 1,
+                "name": "Vikings",
+                "genre": "Action, Adventure, Drama",
+                "year": "2013\u20132020",
+                "rating": "8.5",
+                "watched": "No",
+                "country": "Ireland, Canada",
+                "poster_url": "https://m.media-amazon.com/images/M/MV5BODk4ZjU0NDUtYjdlOS00OTljLTgwZTUtYjkyZjk1NzExZGIzXkEyXkFqcGdeQXVyMDM2NDM2MQ@@._V1_SX300.jpg",
+                "movie_plot": "Vikings transports us to the brutal and mysterious world of Ragnar Lothbrok, a Viking warrior and farmer who yearns to explore--and raid--the distant shores across the ocean.",
+                "movie_actors": "Katheryn Winnick, Gustaf Skarsg\u00e5rd, Alexander Ludwig",
+                "movie_trailer": "tt2306299",
+                "awards": "Won 1 Primetime Emmy. 46 wins & 134 nominations total"
+            },
+            null
+        ]
     }
 ]
