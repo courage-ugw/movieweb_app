@@ -1,10 +1,11 @@
-from flask import Blueprint, render_template, request, flash, redirect, url_for
-from movieweb_app.data_manager.json_data_manager import JSONDataManager, MoviesInfo
-from flask_login import login_user, login_required, logout_user, current_user
-from movieweb_app.blueprints.users_manager.user_auth import SignupForm, SigninForm
-from movieweb_app.movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
-from movieweb_app import bcrypt, models
 from datetime import datetime
+
+from flask import Blueprint, render_template, request, flash, redirect, url_for
+from flask_login import login_user, login_required, logout_user, current_user
+
+from movieweb_app.blueprints.users_manager.user_auth import SignupForm, SigninForm
+from movieweb_app.data_manager.json_data_manager import JSONDataManager, MoviesInfo
+from movieweb_app.utils import bcrypt
 
 # Initializing the Blueprint object
 users_bp = Blueprint('users', __name__, template_folder='templates', static_folder='static',

@@ -1,4 +1,4 @@
-from movieweb_app import login_manager
+from movieweb_app.utils import login_manager
 from movieweb_app.data_manager.json_data_manager import JSONDataManager
 from flask_login import UserMixin
 

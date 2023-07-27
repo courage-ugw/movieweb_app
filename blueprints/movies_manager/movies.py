@@ -1,8 +1,6 @@
 from flask import Blueprint, render_template, url_for, request, redirect, flash
 from movieweb_app.data_manager.json_data_manager import JSONDataManager
 from movieweb_app.movie_data_fetcher.movie_data_fetcher import MovieDataFetcher
-from movieweb_app.blueprints.movies_manager.forms import UpdateMovieForm
-
 from flask_login import current_user, login_required
 
 # Movies Blueprint
