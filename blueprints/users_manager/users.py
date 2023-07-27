@@ -5,7 +5,7 @@ from flask_login import login_user, login_required, logout_user, current_user
 
 from ...blueprints.users_manager.user_auth import SignupForm, SigninForm
 from ...data_manager.json_data_manager import JSONDataManager, MoviesInfo
-from ...utils import bcrypt
+from ...utils.utils import bcrypt
 from ...models import User
 
 # Initializing the Blueprint object

@@ -2,8 +2,8 @@ from flask import Flask
 from flask_login import LoginManager
 from flask_bcrypt import Bcrypt
 
-from .data_manager.json_data_manager import JSONDataManager
-from .models import User
+from movieweb_app.data_manager.json_data_manager import JSONDataManager
+from movieweb_app.models import User
 
 # Move bcrypt and login_manager to the global scope
 bcrypt = Bcrypt()

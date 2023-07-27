@@ -1,4 +1,4 @@
-from movieweb_app.utils import create_app
+from utils.utils import create_app
 
 app = create_app()
 
