@@ -79,36 +79,6 @@ def user_movies(user_id):
     return render_template('user_movies.html', user=user, user_movies=user_movies)
 
 
-@users_bp.route('/add_user', methods=['GET', 'POST'])
-@login_required
-def add_user():
-    """ Adds a new user """
-
-    # Handle the form submission and user creation
-    if request.method == 'POST':
-
-        # Get username
-        user_name = request.form.get('user_name')
-
-        # Assign id to the user
-        users = data_manager.get_all_users
-        user_id = max([user['id'] for user in users]) + 1
-
-        # Add user to users
-        users.append({
-            "id": user_id,
-            "name": user_name,
-            "movies": []
-        })
-
-        # Save users to JSON file
-        data_manager.save_user(users)
-        users_list()
-    else:
-        # Handles GET request
-        return render_template('user_signup.html')
-
-
 @users_bp.route('/signup', methods=['GET', 'POST'])
 def signup():
     """ signup user into the app """
@@ -165,8 +135,8 @@ def signin():
 
         if user and bcrypt.check_password_hash(user.get('password'), form.password.data):
             user_data = User(user.get('id', None), user.get('name', None), user.get('username', None),
-                                    user.get('email', None),user.get('password', None), user.get('date_joined', None),
-                                    user.get('movies', None))
+                             user.get('email', None), user.get('password', None), user.get('date_joined', None),
+                             user.get('movies', None))
             login_user(user_data)
 
             flash('Click `Account Tab` to add Movies', 'success')
@@ -187,9 +157,9 @@ def signout():
     logout_user()
     return redirect(url_for('home.home'))
 
+
 @users_bp.route('/delete_account/<int:user_id>', methods=['POST'])
 def delete_account(user_id):
-
     logout_user()
 
     users = data_manager.get_all_users

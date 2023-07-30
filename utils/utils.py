@@ -14,8 +14,12 @@ login_manager = LoginManager()
 def load_user(user_id):
     # Query  data source to get the user by user_id
     user_data = JSONDataManager('movies.json').get_user_by_id(int(user_id))
-    return User(user_data.get('id', None), user_data.get('name', None), user_data.get('username', None),
-                user_data.get('email', None), user_data.get('password', None), user_data.get('date_joined', None),
+    return User(user_data.get('id', None),
+                user_data.get('name', None),
+                user_data.get('username', None),
+                user_data.get('email', None),
+                user_data.get('password', None),
+                user_data.get('date_joined', None),
                 user_data.get('movies', None))
 
 
