@@ -3,10 +3,10 @@ from datetime import datetime
 from flask import Blueprint, render_template, request, flash, redirect, url_for
 from flask_login import login_user, login_required, logout_user, current_user
 
-from ...blueprints.users_manager.user_auth import SignupForm, SigninForm
-from ...data_manager.json_data_manager import JSONDataManager, MoviesInfo
-from ...utils.utils import bcrypt
-from ...models import User
+from movieweb_app.blueprints.users_manager.user_auth import SignupForm, SigninForm
+from movieweb_app.data_manager.json_data_manager import JSONDataManager, MoviesInfo
+from movieweb_app import bcrypt
+from movieweb_app.models import User
 
 # Initializing the Blueprint object
 users_bp = Blueprint('users', __name__, template_folder='templates', static_folder='static',

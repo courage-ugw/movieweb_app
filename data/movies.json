@@ -57,20 +57,6 @@
         "date_joined": "23-Jul-2023",
         "like_count": 1,
         "movies": [
-            {
-                "id": 14,
-                "name": "Biking Borders",
-                "genre": "Documentary",
-                "year": "2021",
-                "rating": "7.7",
-                "watched": "No",
-                "country": "Germany",
-                "poster_url": "https://m.media-amazon.com/images/M/MV5BZjE1ZWY4YzEtMWU3ZS00ODZjLTkyNGMtNzAxNjc2ZDI2MDc5XkEyXkFqcGdeQXVyODk4NTQwMDE@._V1_SX300.jpg",
-                "movie_plot": "Two young friends set off on a 15,000 km bicycle tour around the world for a unique fund-raising campaign - barely knowing what to expect, but with the dream of building a school in Guatemala.",
-                "movie_actors": "Max Jabs, Nono Konopka",
-                "movie_trailer": "tt11188850",
-                "awards": "N/A"
-            },
             null,
             {
                 "id": 13,
